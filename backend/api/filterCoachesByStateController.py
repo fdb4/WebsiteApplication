@@ -1,6 +1,8 @@
 from app import api, app
 from flask_restx import Resource, fields
 from service.filterCoachesByStateService import filterByState
+from flask_jwt_extended import jwt_required
+
 
 coach_model=api.model(
     "Coaches",
@@ -22,6 +24,7 @@ coach_model=api.model(
 @api.route('/coaches/filter/state/<string:state>')
 class FilterStateResource(Resource):
     @api.marshal_list_with(coach_model)
+    @jwt_required()
     def get(self, state):
         """Filter coaches by state"""
         return filterByState(state)
