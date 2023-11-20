@@ -15,7 +15,7 @@ client_model=api.model(
 )
 
 @api.route('/clients/<int:clientID>')
-class ClientSearchResource(Resource):
+class CoachSearchResource(Resource):
     @api.marshal_with(client_model)
     @jwt_required()
     def get(self, clientID):
