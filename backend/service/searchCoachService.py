@@ -1,9 +1,8 @@
-from data.models import Clients, CoachExp, Location, State
 from data.exts import db
 from sqlalchemy.sql import text
 
-def filterByStateTown(state, town):
-    query = text(
+def searchCoach(coachexpID):
+        query = text(
     "select info2.email, info2.firstname, info2.lastname, info2.price, info2.rating, info2.experience, info2.bio, info2.gym, info2.town, s.state "
     "from schema.state s "
     "join "
@@ -13,10 +12,9 @@ def filterByStateTown(state, town):
     "select c.clientID, c.email, c.firstname, c.lastname, x.price, x.rating, x.experience, x.bio, x.locationID "
     "from schema.clients c "
     "join schema.coachexp x "
-    "where c.coachexpid = x.coachexpid) info "
-    "where info.locationID = l.locationID and l.town = :to) info2 "
-    "where info2.stateID = s.StateID and s.state = :st;")
-    query = query.bindparams(to=town, st=state)
-
-    results = db.session.execute(query).fetchall()
-    return results
+    "where c.coachexpid = x.coachexpid and c.coachexpid = :cid) info "
+    "where info.locationID = l.locationID) info2 "
+    "where info2.stateID = s.StateID ;")
+        query = query.bindparams(cid=coachexpID)
+        coaches=db.session.execute(query).fetchall()
+        return coaches
