@@ -1,8 +1,8 @@
-from app import api2, app
+from app import api, app
 from flask_restx import Resource, fields
 from service.filterWorkoutsByNameService import filterWorkoutsByName
 
-workout_bank_model=api2.model(
+workout_bank_model=api.model(
     "Workout_Bank_Model",
     {
         "workoutID":fields.Integer(),
@@ -16,9 +16,9 @@ workout_bank_model=api2.model(
 
 )
 
-@api2.route('/workouts/filter/name/<string:name>')
+@api.route('/workouts/filter/name/<string:name>')
 class filterWorkoutsByNameResource(Resource):
-    @api2.marshal_list_with(workout_bank_model)
+    @api.marshal_list_with(workout_bank_model)
     def get(self, name):
         """Filter workouts by name"""
         return filterWorkoutsByName(name)

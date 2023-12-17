@@ -1,8 +1,8 @@
-from app import api2, app
+from app import api, app
 from flask_restx import Resource, fields
 from service.searchCoachService import searchCoach
 
-coach_model = api2.model(
+coach_model = api.model(
     "Coaches",
     {
         "clientID": fields.Integer(),
@@ -19,9 +19,9 @@ coach_model = api2.model(
         "specializations": fields.List(fields.String)
     }
 )
-@api2.route('/coaches/<int:coachexpID>')
+@api.route('/coaches/<int:coachID>')
 class CoachSearchResource(Resource):
-    @api2.marshal_with(coach_model)
-    def get(self, coachexpID):
+    @api.marshal_with(coach_model)
+    def get(self, coachID):
         """Get a coach by id"""
-        return searchCoach(coachexpID)
+        return searchCoach(coachID)

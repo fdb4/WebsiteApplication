@@ -1,9 +1,9 @@
-from app import api2, app
+from app import api, app
 from flask_restx import Api, Resource, fields
 from service.filterCoachesBySpecializationService import filterBySpecialization
 
 
-coach_model = api2.model(
+coach_model = api.model(
     "Coach",
     {
         "clientID": fields.Integer(),
@@ -17,13 +17,13 @@ coach_model = api2.model(
         "gym": fields.String(45),
         "town": fields.String(45),
         "state": fields.String(45),
-        "specialization": fields.String()  
+        "specializations": fields.List(fields.String)
     }
 )
 
-@api2.route('/coaches/filter/specialization/<string:specialization>')
+@api.route('/coaches/filter/specialization/<string:specialization>')
 class FilterSpecializationResource(Resource):
-    @api2.marshal_list_with(coach_model)
+    @api.marshal_list_with(coach_model)
     def get(self, specialization):
         """Filter coaches by specialization"""
         return filterBySpecialization(specialization)

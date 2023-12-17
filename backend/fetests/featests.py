@@ -43,6 +43,7 @@ def test_clientlogin():
     except:
         assert True is False
     try:
+        WebDriverWait(driver,10)
         WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '//button[text()="Submit Survey"]')))
         select = Select(driver.find_element(By.NAME, "height"))
         select.select_by_value(r"5'0")
@@ -68,22 +69,80 @@ def test_clientlogin():
         select = Select(driver.find_element(By.NAME, "martialarts"))
         select.select_by_value(r"yes")
         driver.find_element(By.NAME, "other").send_keys("Just your average client")
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '//button[text()="Submit Survey"]')))
         driver.find_element(By.XPATH, '//button[text()="Submit Survey"]').click()
     except:
         assert True is False
 
 def test_DLog():
-    try:
-        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '//a[text()="Daily Log"]')))
-        driver.find_element(By.XPATH, '//a[text()="Daily Log"]').click()
-        driver.find_element(By.NAME, "water").send_keys("2000")
-        driver.find_element(By.NAME, "calorie").send_keys("2000")
-        driver.find_element(By.NAME,"mood").send_keys(Keys.LEFT)
-        driver.find_element(By.NAME,"mood").send_keys(Keys.LEFT)
-        driver.find_element(By.XPATH, '//button[text()="Submit"]').click()
+    try:#This Code is just a mess
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.LINK_TEXT, 'Daily Log')))
+        driver.find_element(By.LINK_TEXT, 'Daily Log').click()
     except:
         assert True is False
-'''def test_login():
+    try:
+        #water=driver.find_element(By.NAME, "calorie")#Idk why this works but it works
+        #water.send_keys("2000")
+        #
+        WebDriverWait(driver, 10).until(expected_conditions.presence_of_element_located((By.NAME, "mood")))
+        driver.find_element(By.NAME, "mood").send_keys(Keys.LEFT)
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.LINK_TEXT, 'Daily Log')))
+        driver.find_element(By.LINK_TEXT, 'Daily Log').click()
+        driver.find_element(By.NAME, "mood").send_keys(Keys.LEFT)
+        WebDriverWait(driver, 10).until(expected_conditions.presence_of_element_located((By.NAME, "calorie")))
+        #driver.find_element(By.LINK_TEXT, 'Daily Log').click()
+        driver.find_element(By.NAME, "calorie").send_keys("2000")
+        WebDriverWait(driver, 10).until(expected_conditions.presence_of_element_located((By.NAME, "water")))
+        driver.find_element(By.NAME, "water").send_keys("2000")
+        driver.find_element(By.CLASS_NAME,"submit-button").click()
+
+    except:
+        assert True is False
+def test_workouts():
+    try:
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.LINK_TEXT, "Workouts")))
+        driver.find_element(By.LINK_TEXT, 'Workouts').click()
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, 'green')))
+        driver.find_element(By.CLASS_NAME, 'green').click()
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '//button[text()="Create Workout"]')))
+        driver.find_element(By.XPATH, '//button[text()="Create Workout"]').click()
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.NAME, 'planName')))
+        driver.find_element(By.NAME, 'planName').send_keys("MyWOPlan")
+        driver.find_element(By.XPATH,'//button[text()="Add Exercise"]').click()
+        select = Select(driver.find_element(By.XPATH, '(//select[@name="workoutID"])[1]'))
+        select.select_by_value(r"5")
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.NAME, 'Sets')))
+        driver.find_element(By.NAME, 'Sets').send_keys("20")
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.NAME, 'reps')))
+        driver.find_element(By.NAME, 'reps').send_keys("20")
+        #Second Excersie
+        driver.find_element(By.XPATH, '//button[text()="Add Exercise"]').click()
+        select = Select(driver.find_element(By.XPATH, '(//select[@name="workoutID"])[2]'))
+        select.select_by_value(r"8")
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '(//input[@name="Sets"])[2]')))
+        driver.find_element(By.XPATH, '(//input[@name="Sets"])[2]').send_keys("20")
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '(//input[@name="reps"])[2]')))
+        driver.find_element(By.XPATH, '(//input[@name="reps"])[2]').send_keys("20")
+        driver.find_element(By.XPATH, '//button[text()="Submit Workout Plan"]').click()
+    except:
+        assert True is False
+#def test_VWO():#ViewWorkout
+
+def test_delp():
+    try:
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '//img[@alt="User Profile"]')))
+        driver.find_element(By.XPATH, '//img[@alt="User Profile"]').click()
+        #driver.find_element(By.XPATH, '//img[@alt="User Profile"]').click()#once again no idea why
+        driver.find_element(By.XPATH, '//img[@alt="Settings Icon"]').click()
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '//button[text()="Delete"]')))
+        driver.find_element(By.XPATH, '//button[text()="Delete"]').click()
+        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, '//button[text()="Yes"]')))
+        driver.find_element(By.XPATH, '//button[text()="Yes"]').click()
+    except:
+        assert True is False
+'''
+    
+def test_login():
     driver.get("http://localhost:3000")
     try:
         WebDriverWait(driver,10).until(expected_conditions.element_to_be_clickable((By.XPATH,'//a[text()="LOGIN"]')))

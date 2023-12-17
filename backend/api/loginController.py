@@ -1,10 +1,10 @@
-from app import api2
+from app import api
 from flask_restx import Resource, fields
 from flask import request
 from service.loginService import loginClient
 
 
-login_model=api2.model(
+login_model=api.model(
     'Login',
     {
         "email":fields.String(),
@@ -12,9 +12,9 @@ login_model=api2.model(
     }
 )
 
-@api2.route('/login')
+@api.route('/login')
 class LoginResource(Resource):
-    @api2.expect(login_model)
+    @api.expect(login_model)
     def post(self):
         email=request.json['email']
         password=request.json['password']

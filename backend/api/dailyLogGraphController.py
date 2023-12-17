@@ -1,9 +1,9 @@
-from app import api2, app
+from app import api, app
 from flask_restx import Resource, fields
 from flask import request
 from service.dailyLogGraphService import dailyLogGraph
 
-log_graph_model=api2.model(
+log_graph_model=api.model(
     "Log_Graph",
     {
         "date":fields.Date(),
@@ -14,9 +14,9 @@ log_graph_model=api2.model(
 
 )
 
-@api2.route('/dailyLog-data/<int:clientID>')
+@api.route('/dailyLog-data/<int:clientID>')
 class dailyLogGraphResource(Resource):
-    @api2.marshal_list_with(log_graph_model)
+    @api.marshal_list_with(log_graph_model)
     def get(self, clientID):
         """Daily Log Graph Points"""
         
