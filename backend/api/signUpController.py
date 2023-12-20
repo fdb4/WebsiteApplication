@@ -1,10 +1,10 @@
-from app import api2
+from app import api
 from flask_restx import Resource, fields
 from flask import request
 from service.signUpService import signUpClient
 
 
-signup_model=api2.model(
+signup_model=api.model(
     'Signup',
     {
         "email":fields.String(),
@@ -15,9 +15,9 @@ signup_model=api2.model(
     }
 )
 
-@api2.route('/signup')
+@api.route('/signup')
 class SignUpResource(Resource):
-    @api2.expect(signup_model)
+    @api.expect(signup_model)
     def post(self):
         """Add a new client"""
         email=request.json['email']

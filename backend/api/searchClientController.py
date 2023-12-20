@@ -1,8 +1,8 @@
-from app import api2, app
+from app import api, app
 from flask_restx import Resource, fields
 from service.searchClientService import searchClient
 
-client_model=api2.model(
+client_model=api.model(
     "Clients",
     {
         "email":fields.String(45),
@@ -12,9 +12,9 @@ client_model=api2.model(
 
 )
 
-@api2.route('/clients/<int:clientID>')
+@api.route('/clients/<int:clientID>')
 class ClientSearchResource(Resource):
-    @api2.marshal_with(client_model)
+    @api.marshal_with(client_model)
     def get(self, clientID):
         """Get a client by id"""
         return searchClient(clientID)

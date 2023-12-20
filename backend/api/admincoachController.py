@@ -1,20 +1,18 @@
-from app import api2
+from app import api
 from flask_restx import Resource, fields
 from flask import request,session,jsonify
 from service.admincoachService import updateCV
 
-acModel=api2.model(
+acModel=api.model(
     'acModel',#admin coach Model
     {
-        "visible":fields.Boolean
+        "visible":fields.Integer()
     }
 )
 
-@api2.route('/admincc/<int:coachexpID>')
+@api.route('/admincc/<int:coachexpID>')
 class admincc(Resource):
-    @api2.expect(acModel)
+    @api.expect(acModel)
     def put(self, coachexpID):#Note add verification that user is admin
-
-        test=request.json
-        result=updateCV(coachexpID,test)
+        result=updateCV(coachexpID,request.json["visible"])
         return result

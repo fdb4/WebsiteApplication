@@ -1,8 +1,8 @@
-from app import api2, app
+from app import api, app
 from flask_restx import Resource, fields
 from service.getClientGenInfoService import getClientGenInfo
 
-genInfo_model=api2.model(
+genInfo_model=api.model(
     "genInfo",
     {
         "firstname":fields.String(45),
@@ -18,9 +18,9 @@ genInfo_model=api2.model(
 
 )
 
-@api2.route('/genInfo/<clientID>')
+@api.route('/genInfo/<clientID>')
 class ClientInfoResource(Resource):
-    @api2.marshal_list_with(genInfo_model)
+    @api.marshal_list_with(genInfo_model)
     def get(self, clientID):
         """Get General Information by ClientID"""
         info = getClientGenInfo(clientID)

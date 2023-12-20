@@ -1,8 +1,8 @@
-from app import api2
+from app import api
 from flask_restx import Resource, fields
 from service.getWorkoutsService import getWorkouts
 
-workout_bank_model=api2.model(
+workout_bank_model=api.model(
     "Workout_Bank_Model",
     {
         "workoutID":fields.Integer(),
@@ -16,9 +16,9 @@ workout_bank_model=api2.model(
 
 )
 
-@api2.route('/workouts')
+@api.route('/workouts')
 class getWorkoutsRescource(Resource):
-    @api2.marshal_list_with(workout_bank_model)
+    @api.marshal_list_with(workout_bank_model)
     def get(self):
         """Get all workouts"""
         return getWorkouts()

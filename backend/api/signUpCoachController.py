@@ -1,9 +1,9 @@
-from app import api2
+from app import api
 from flask_restx import Resource, fields
 from flask import request, session
 from service.signUpCoachService import signUpCoach
 
-coach_signup_model=api2.model(
+coach_signup_model=api.model(
     'Coach_SignUp',
     {
         "clientID":fields.Integer(),
@@ -16,9 +16,9 @@ coach_signup_model=api2.model(
     }
 )
 
-@api2.route('/coachSignUp')
+@api.route('/coachSignUp')
 class CoachSignUpResource(Resource):
-    @api2.expect(coach_signup_model)
+    @api.expect(coach_signup_model)
     def post(self):
         """Getting info from new coaches"""
         coachID = request.json['clientID']
